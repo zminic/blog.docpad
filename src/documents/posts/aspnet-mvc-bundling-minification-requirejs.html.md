@@ -1,14 +1,15 @@
 ---
 title: "ASP.NET MVC Bundling and Minification with RequireJS"
 layout: "post"
-date: 2014-06-24
+date: 2014-03-26
 summary: "It’s hard to say what are best practices for handling code minification if you are using ASP.NET MVC and RequireJS library. You could use built-in optimization features of ASP.NET on one side and RequireJS optimization tool on the other side. In this article I will describe one potential setup."
-summaryImage: "/images/requirejs.png"
+summaryImage: "/images/posts/requirejs.png"
+tags: [asp.net, javascript, programming, bundling, minification, mvc, optimization, requirejs]
 ---
 
 # ASP.NET MVC Bundling and Minification with RequireJS #
 
-<img src="/images/requirejs.png" align="left" style="padding: 0 15px 15px 0" />
+<img src="/images/posts/requirejs.png" align="left" />
 
 It’s hard to say what are best practices for handling code minification if you are using ASP.NET MVC and RequireJS library. You could use built-in optimization features of ASP.NET on one side and RequireJS optimization tool on the other side.
 

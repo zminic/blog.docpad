@@ -1,6 +1,8 @@
 <html>
 <head>
-    <title><%= if @document.title then "#{@document.title} | #{@site.title}" else @site.title %></title>
+    <title><%= @getPreparedTitle() %></title>
+	<meta name="description" content="<%= @getPreparedDescription() %>">
+	<meta name="keywords" content="<%= @getPreparedKeywords() %>">
     <%- @getBlock("meta").toHTML() %>
     <%- @getBlock("styles").add(["/styles/style.css"]).toHTML() %>
 </head>

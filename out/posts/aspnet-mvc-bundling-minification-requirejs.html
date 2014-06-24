@@ -1,6 +1,8 @@
 <html>
 <head>
     <title>ASP.NET MVC Bundling and Minification with RequireJS | The realm of code</title>
+	<meta name="description" content="Personal blog about coding and web technologies - Zeljko Minic">
+	<meta name="keywords" content="blog, coding, development, web, technology, IT, asp.net, javascript, programming, bundling, minification, mvc, optimization, requirejs">
     <meta name="generator" content="DocPad v6.69.0" />
     <style >html.wait {
 	cursor: wait !important;
@@ -30,7 +32,7 @@
 		
 		<div class="post">
 	<h1 id="asp-net-mvc-bundling-and-minification-with-requirejs">ASP.NET MVC Bundling and Minification with RequireJS</h1>
-<p><img src="/images/requirejs.png" align="left" style="padding: 0 15px 15px 0" /></p>
+<p><img src="/images/posts/requirejs.png" align="left" /></p>
 <p>It’s hard to say what are best practices for handling code minification if you are using ASP.NET MVC and RequireJS library. You could use built-in optimization features of ASP.NET on one side and RequireJS optimization tool on the other side.</p>
 <p>RequireJS has a really good optimization tool which can optimize single file or a whole project and track module dependencies, but when you start to pair it up with .NET project you end up thinking about stuff that are not supported. For example RequireJS optimization tool can copy whole project to different directory and to optimize files there, but that is not regular workflow for .NET project. In .NET world to publish project you typically use built-in publish workflow rather then manually copying files.</p>
 <p>I’ve seen other approaches also, where you use optimizer tool to optimize only Scripts directory to another release directory and then to hack project file to include those files in project, but that solution is kinda messy in my opinion.</p>

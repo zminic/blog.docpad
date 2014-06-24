@@ -8,18 +8,24 @@ order: 0
 
 <% for page in  @getCollection("html").findAll({ relativeOutDirPath: 'posts' }, [{date: -1}]).toJSON(): %>
 	<div class="post inline">
-		<h1>
-			<a href="<%= page.url %>">
-				<%= page.title %>
-			</a>
-		</h1>
-		
-		<% if page.summaryImage: %>
-			<img src="<%= page.summaryImage %>" style="max-height: 100px" align="left" />
-		<% end %>
-		
-		<% if page.summary: %>
-			<p> <%- page.summary %> </p>
-		<% end %>
+		<div class="title">
+			<h1>
+				<a href="<%= page.url %>">
+					<%= page.title %>
+				</a>
+			</h1>
+		</div>
+
+		<div class="body">
+			<% if page.summaryImage: %>
+				<img src="<%= page.summaryImage %>" align="left" />
+			<% end %>
+			
+			<% if page.summary: %>
+				<p> <%- page.summary %> </p>
+			<% end %>
+			
+			<p style="clear: left"></p>
+		</div>
 	</div>	
 <% end %>
