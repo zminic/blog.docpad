@@ -2,11 +2,11 @@
 docpadConfig = {
     templateData:
         site:
-            title: "My Website"
+            title: "The realm of code"
 			
 	collections:
         pages: ->
-            @getCollection("html").findAllLive({isPage:true})
+            @getCollection("html").findAllLive({isPage:true},[{order:1}])
 			
 	plugins:
 		ghpages:

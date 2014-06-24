@@ -1,0 +1,19 @@
+---
+name: "!home"
+title: "Home"
+layout: "default"
+isPage: true
+order: 0
+---
+
+<% for page in  @getCollection("html").findAll({ relativeOutDirPath: 'posts' }, [{date: -1}]).toJSON(): %>
+	<div class="post inline">
+		<h1>
+			<a href="<%= page.url %>">
+				<%= page.title %>
+			</a>
+		</h1>
+		
+		<%- page.summary %>
+	</div>
+<% end %>

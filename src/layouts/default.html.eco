@@ -5,18 +5,22 @@
     <%- @getBlock("styles").add(["/styles/style.css"]).toHTML() %>
 </head>
 <body>
-	<ul>
-    <% for page in @getCollection("pages").toJSON(): %>
-        <li class="<%= if page.id is @document.id then 'active' else 'inactive' %>">
-            <a href="<%= page.url %>">
-                <%= page.title %>
-            </a>
-        </li>
-    <% end %>
-	</ul>
+	<div class="siteContainer">
+		<img src="/images/logo.png" />
 
-    <h1><%= @document.title %></h1>
-    <%- @content %>
+		<ul class="menu">
+		<% for page in @getCollection("pages").toJSON(): %>
+			<li class="<%= if page.id is @document.id then 'active' else 'inactive' %>">
+				<a href="<%= page.url %>">
+					<%= page.title %>
+				</a>
+			</li>
+		<% end %>
+		</ul>
+		
+		<%- @content %>
+	</div>
+	
     <%- @getBlock("scripts").toHTML() %>
 </body>
 </html>

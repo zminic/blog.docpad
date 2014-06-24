@@ -1,0 +1,70 @@
+body
+{
+	background: url('/images/bgpattern.gif');
+	margin-top: 40px;
+	
+	font-family: "Open Sans", Helvetica, Arial, sans-serif;
+	font-size: 1rem;
+}
+
+.siteContainer
+{
+	width: 960px;
+	margin: 0 auto;
+	background-color: #fff;
+	padding: 20px 40px;
+}
+
+.menu
+{
+	list-style-type: none;
+	padding: 15px 0 15px 0;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+
+.menu > li
+{
+	display: inline;
+	padding-right: 20px;
+}
+
+.menu li a
+{
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #636363;
+	font-size: .9em;
+}
+
+.menu li a:hover
+{
+	color: #000;
+}
+
+.menu li.active a
+{
+	font-weight: bold;
+}
+
+h1
+{
+	font-size: 20px;
+}
+
+h1 > a
+{
+	text-decoration: none;
+	color: #333;
+}
+
+.post
+{
+	padding-top: 10px;
+}
+
+.post.inline
+{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
