@@ -1,0 +1,10 @@
+module.exports = {
+	templateData: {
+		site: {
+			title: "The realm of code"
+		}
+	},
+	collections: {
+		pages: function(){ return this.getCollection("html").findAllLive({isPage:true}); }
+	}
+}

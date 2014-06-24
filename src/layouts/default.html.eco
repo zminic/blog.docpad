@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title><%= if @document.title then "#{@document.title} | #{@site.title}" else @site.title %></title>
+    <%- @getBlock("meta").toHTML() %>
+    <%- @getBlock("styles").add(["/styles/style.css"]).toHTML() %>
+</head>
+<body>
+	<ul>
+    <% for page in @getCollection("pages").toJSON(): %>
+        <li class="<%= if page.id is @document.id then 'active' else 'inactive' %>">
+            <a href="<%= page.url %>">
+                <%= page.title %>
+            </a>
+        </li>
+    <% end %>
+	</ul>
+
+    <h1><%= @document.title %></h1>
+    <%- @content %>
+    <%- @getBlock("scripts").toHTML() %>
+</body>
+</html>
