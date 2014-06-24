@@ -1,0 +1,122 @@
+<html>
+<head>
+    <title>ASP.NET MVC Bundling and Minification with RequireJS | The realm of code</title>
+    <meta name="generator" content="DocPad v6.69.0" />
+    <style >html.wait {
+	cursor: wait !important;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}</style><link  rel="stylesheet" href="/styles/style.css" />
+</head>
+<body>
+	<div class="siteContainer">
+		<img src="/images/logo.png" />
+
+		<ul class="menu">
+		
+			<li class="inactive">
+				<a href="/index.html">
+					Home
+				</a>
+			</li>
+		
+			<li class="inactive">
+				<a href="/about.html">
+					About
+				</a>
+			</li>
+		
+		</ul>
+		
+		<div class="post">
+	<h1 id="asp-net-mvc-bundling-and-minification-with-requirejs">ASP.NET MVC Bundling and Minification with RequireJS</h1>
+<p><img src="/images/requirejs.png" align="left" style="padding: 0 15px 15px 0" /></p>
+<p>It’s hard to say what are best practices for handling code minification if you are using ASP.NET MVC and RequireJS library. You could use built-in optimization features of ASP.NET on one side and RequireJS optimization tool on the other side.</p>
+<p>RequireJS has a really good optimization tool which can optimize single file or a whole project and track module dependencies, but when you start to pair it up with .NET project you end up thinking about stuff that are not supported. For example RequireJS optimization tool can copy whole project to different directory and to optimize files there, but that is not regular workflow for .NET project. In .NET world to publish project you typically use built-in publish workflow rather then manually copying files.</p>
+<p>I’ve seen other approaches also, where you use optimizer tool to optimize only Scripts directory to another release directory and then to hack project file to include those files in project, but that solution is kinda messy in my opinion.</p>
+<p>Approach that worked for my use case is to use ASP.NET optimization features to create optimized bundles and then to configure RequireJS to look for modules in those bundles. It turned out to be fast solution, although not very elegant since there is double configuration.</p>
+<h2 id="bundling-part">Bundling part</h2>
+<p>define your bundles in App_Start/BundleConfig.cs:</p>
+<pre><code>bundles.Add(new ScriptBundle(&quot;~/bundles/test&quot;).Include(
+                   &quot;~/Scripts/jquery-{version}.js&quot;, 
+                   &quot;~/Scripts/q.js&quot;, 
+                   &quot;~/Scripts/globalize.js&quot;));
+</code></pre><p>This is test bundle that bundles three libraries.</p>
+<h2 id="requirejs-configuration-part">RequireJS configuration part</h2>
+<p>To configure RequireJS I will inject some script in _Layout view right after loading RequireJS library:</p>
+<pre><code>&lt;script src=&quot;~/Scripts/require.js&quot;&gt;&lt;/script&gt;
+
+@if (!HttpContext.Current.IsDebuggingEnabled)
+{
+    &lt;script&gt;
+        requirejs.config({
+            bundles: {
+                &#39;@Scripts.Url(&quot;~/bundles/test&quot;).ToString()&#39;: [
+                    &#39;jquery&#39;,
+                    &#39;globalize&#39;,
+                    &#39;q&#39;]
+            }
+        });
+    &lt;/script&gt;
+}
+</code></pre><p>A few things to note here:</p>
+<ul>
+<li>We are not using data-main attribute for RequireJS configuration script, instead we are loading it manually after our new configuration.</li>
+<li>We are using RequireJS <a href="http://requirejs.org/docs/api.html#config-bundles">“bundles” config parameter</a> to tell RequireJS where to search for modules. Configuration above simply states that modules jquery, globalize and q can be found in a bundle we created earlier. That way when RequireJS needs to load script it will load optimized version only if we are in release mode.</li>
+<li>With ‘@Scripts.Url(“~/bundles/test”).ToString()’ line we are obtaining optimized url for the bundle we created.</li>
+</ul>
+<h2 id="summing-up">Summing up</h2>
+<p>And that’s it! I said it would be simple but not very elegant. The only part I don’t like here is that there is double configuration of bundles, first in .NET code and latter in javascript for RequireJS configuration. But if you don’t mind that solution is pretty straightforward, we are still using all benefits of RequireJS but we are not using it’s optimization tool, instead we are telling it where it can find our optimized bundles.</p>
+<p>Happy requiring :)</p>
+
+</div>
+	</div>
+	
+    <script >(function(){
+	/* Did we just livereload? */
+var log = !!(localStorage && console && console.log && true);
+if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
+	localStorage.removeItem('/docpad-livereload/reloaded');
+	console.log('LiveReload completed at', new Date())
+}
+
+/* Listen for the regenerated event and perform a reload of the page when the event occurs */
+var listen = function(){
+	var primus = new Primus('/docpad-livereload');
+	primus.on('data', function(data){
+		if ( data && data.message ) {
+			if ( data.message === 'generateBefore' ) {
+				if ( log ) {
+					console.log('LiveReload started at', new Date());
+				}
+				if ( typeof document.getElementsByTagName !== 'undefined' ) {
+	document.getElementsByTagName('html')[0].className += ' wait';
+}
+			}
+			else if ( data.message === 'generateAfter' ) {
+				if ( log ) {
+					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
+				}
+				document.location.reload();
+			}
+		}
+	});
+};
+	/* Inject socket into our page */
+var inject = function(){
+	var t = document.createElement('script');
+	t.type = 'text/javascript';
+	t.async = 'async';
+	t.src = '/primus/primus.js';
+	t.onload = listen;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(t, s);
+};
+	if ( typeof Primus !== 'undefined' ) {
+		listen();
+	} else {
+		inject();
+	}
+})();</script>
+</body>
+</html>
