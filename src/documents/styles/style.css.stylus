@@ -6,7 +6,7 @@ top-header-size = 20px
 header-size-decrement = 2px
 
 body
-	font-family: font-face
+	font-family: 'Arimo', sans-serif;
 	font-size: 1rem
 	@media screen and (min-width: 960px)
 		background: url('/images/bgpattern.gif')
@@ -41,8 +41,9 @@ body
 // set header styles
 for n, i in 1..5
 	h{n}
+		font-family: 'Oswald', sans-serif
 		font-size: top-header-size - i * header-size-decrement
-		padding-bottom:  10px 10px 0 0
+		padding-bottom: 10px
 		color: heading-color
 		a
 			color: heading-color

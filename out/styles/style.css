@@ -1,5 +1,5 @@
 body {
-  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-family: 'Arimo', sans-serif;
   font-size: 1rem;
 }
 @media screen and (min-width: 960px) {
@@ -42,8 +42,9 @@ body {
   color: #000;
 }
 h1 {
+  font-family: 'Oswald', sans-serif;
   font-size: 20px;
-  padding-bottom: 10px 10px 0 0;
+  padding-bottom: 10px;
   color: #333;
 }
 h1 a {
@@ -51,8 +52,9 @@ h1 a {
   text-decoration: none;
 }
 h2 {
+  font-family: 'Oswald', sans-serif;
   font-size: 18px;
-  padding-bottom: 10px 10px 0 0;
+  padding-bottom: 10px;
   color: #333;
 }
 h2 a {
@@ -60,8 +62,9 @@ h2 a {
   text-decoration: none;
 }
 h3 {
+  font-family: 'Oswald', sans-serif;
   font-size: 16px;
-  padding-bottom: 10px 10px 0 0;
+  padding-bottom: 10px;
   color: #333;
 }
 h3 a {
@@ -69,8 +72,9 @@ h3 a {
   text-decoration: none;
 }
 h4 {
+  font-family: 'Oswald', sans-serif;
   font-size: 14px;
-  padding-bottom: 10px 10px 0 0;
+  padding-bottom: 10px;
   color: #333;
 }
 h4 a {
@@ -78,8 +82,9 @@ h4 a {
   text-decoration: none;
 }
 h5 {
+  font-family: 'Oswald', sans-serif;
   font-size: 12px;
-  padding-bottom: 10px 10px 0 0;
+  padding-bottom: 10px;
   color: #333;
 }
 h5 a {
