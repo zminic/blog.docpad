@@ -8,11 +8,7 @@
     <meta name="generator" content="DocPad v6.69.0" />
 	<link href='http://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <style >html.wait {
-	cursor: wait !important;
-	opacity: 0;
-	transition: opacity 0.5s ease;
-}</style><link  rel="stylesheet" href="/styles/style.css" />
+    <link  rel="stylesheet" href="/styles/style.css" />
 </head>
 <body>
 	<div class="siteContainer">
@@ -125,53 +121,38 @@
 		</div>
 	</div>
 
+	<div class="post inline">
+		<div class="title">
+			<h1>
+				<a href="/posts/working-with-collections-in-javascript-like-boss.html">
+					Working with collections in javascript like a boss
+				</a>
+			</h1>
+		</div>
+
+		<div class="body">
+			
+				<img src="/images/posts/linqjs.jpg" align="left" />
+			
+			
+			
+				<p> 
+					If you ever had to convert one object graph to another you know what pain can that be. In this post I will explain how to use excellent linq.js library to make that work easy. 
+					<a href="/posts/working-with-collections-in-javascript-like-boss.html">read more</a>
+				</p>
+			
+			
+			<p style="clear: left" class="info">
+				Posted on January 18th 2013
+				
+					, tags: javascript, programming, collections
+				
+			</p>
+		</div>
+	</div>
+
 	</div>
 	
-    <script >(function(){
-	/* Did we just livereload? */
-var log = !!(localStorage && console && console.log && true);
-if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
-	localStorage.removeItem('/docpad-livereload/reloaded');
-	console.log('LiveReload completed at', new Date())
-}
-
-/* Listen for the regenerated event and perform a reload of the page when the event occurs */
-var listen = function(){
-	var primus = new Primus('/docpad-livereload');
-	primus.on('data', function(data){
-		if ( data && data.message ) {
-			if ( data.message === 'generateBefore' ) {
-				if ( log ) {
-					console.log('LiveReload started at', new Date());
-				}
-				if ( typeof document.getElementsByTagName !== 'undefined' ) {
-	document.getElementsByTagName('html')[0].className += ' wait';
-}
-			}
-			else if ( data.message === 'generateAfter' ) {
-				if ( log ) {
-					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
-				}
-				document.location.reload();
-			}
-		}
-	});
-};
-	/* Inject socket into our page */
-var inject = function(){
-	var t = document.createElement('script');
-	t.type = 'text/javascript';
-	t.async = 'async';
-	t.src = '/primus/primus.js';
-	t.onload = listen;
-	var s = document.getElementsByTagName('script')[0];
-	s.parentNode.insertBefore(t, s);
-};
-	if ( typeof Primus !== 'undefined' ) {
-		listen();
-	} else {
-		inject();
-	}
-})();</script>
+    
 </body>
 </html>
