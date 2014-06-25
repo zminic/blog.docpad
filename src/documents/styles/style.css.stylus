@@ -2,7 +2,7 @@ font-face = "Open Sans", Helvetica, Arial, sans-serif
 menu-color = #636363
 heading-color = #333
 common-border-color = #eee
-top-header-size = 20px
+top-header-size = 18px
 header-size-decrement = 2px
 
 body
@@ -55,6 +55,9 @@ for n, i in 1..5
 		border-bottom: 1px solid common-border-color
 		.body img
 				max-height: 100px
+		.info
+			color: #ccc;
+			font-size: 0.9em;
 	pre
 		background-color: #efefef
 		padding: 5px
@@ -63,3 +66,5 @@ for n, i in 1..5
 		padding: 5px
 	img[align]
 		padding: 0 15px 15px 0
+	.comments
+		margin-top: 30px

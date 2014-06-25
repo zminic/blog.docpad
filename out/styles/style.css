@@ -43,7 +43,7 @@ body {
 }
 h1 {
   font-family: 'Oswald', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   padding-bottom: 10px;
   color: #333;
 }
@@ -53,7 +53,7 @@ h1 a {
 }
 h2 {
   font-family: 'Oswald', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 10px;
   color: #333;
 }
@@ -63,7 +63,7 @@ h2 a {
 }
 h3 {
   font-family: 'Oswald', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   padding-bottom: 10px;
   color: #333;
 }
@@ -73,7 +73,7 @@ h3 a {
 }
 h4 {
   font-family: 'Oswald', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   padding-bottom: 10px;
   color: #333;
 }
@@ -83,7 +83,7 @@ h4 a {
 }
 h5 {
   font-family: 'Oswald', sans-serif;
-  font-size: 12px;
+  font-size: 10px;
   padding-bottom: 10px;
   color: #333;
 }
@@ -100,6 +100,10 @@ h5 a {
 .post.inline .body img {
   max-height: 100px;
 }
+.post.inline .info {
+  color: #ccc;
+  font-size: 0.9em;
+}
 .post pre {
   background-color: #efefef;
   padding: 5px;
@@ -110,4 +114,7 @@ h5 a {
 }
 .post img[align] {
   padding: 0 15px 15px 0;
+}
+.post .comments {
+  margin-top: 30px;
 }

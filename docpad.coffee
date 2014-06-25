@@ -30,6 +30,11 @@ docpadConfig =
 		ghpages:
 			deployRemote: 'target'
 			deployBranch: 'master'
+		moment:
+			formats: [
+			  {raw: 'date', format: 'MMMM Do YYYY', formatted: 'humanDate'}
+			  {raw: 'date', format: 'YYYY-MM-DD', formatted: 'computerDate'}
+			]
 
 # Export the Configuration
 module.exports = docpadConfig

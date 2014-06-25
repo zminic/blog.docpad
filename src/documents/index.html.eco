@@ -6,26 +6,34 @@ isPage: true
 order: 0
 ---
 
-<% for page in  @getCollection("html").findAll({ relativeOutDirPath: 'posts' }, [{date: -1}]).toJSON(): %>
+<% for post in  @getCollection("html").findAll({ relativeOutDirPath: 'posts' }, [{date: -1}]).toJSON(): %>
 	<div class="post inline">
 		<div class="title">
 			<h1>
-				<a href="<%= page.url %>">
-					<%= page.title %>
+				<a href="<%= post.url %>">
+					<%= post.title %>
 				</a>
 			</h1>
 		</div>
 
 		<div class="body">
-			<% if page.summaryImage: %>
-				<img src="<%= page.summaryImage %>" align="left" />
+			<% if post.summaryImage: %>
+				<img src="<%= post.summaryImage %>" align="left" />
 			<% end %>
 			
-			<% if page.summary: %>
-				<p> <%- page.summary %> </p>
+			<% if post.summary: %>
+				<p> 
+					<%- post.summary %> 
+					<a href="<%= post.url %>">read more</a>
+				</p>
 			<% end %>
 			
-			<p style="clear: left"></p>
+			<p style="clear: left" class="info">
+				Posted on <%= @moment(post.date).format('MMMM Do YYYY') %>
+				<% if post.tags: %>
+					, tags: <%= (post.tags or []).join(', ') %>
+				<% end %>
+			</p>
 		</div>
-	</div>	
+	</div>
 <% end %>

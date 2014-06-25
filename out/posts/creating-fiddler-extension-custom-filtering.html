@@ -1,0 +1,260 @@
+<html>
+<head>
+    <title>Creating Fiddler extension for custom filtering | The realm of code</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Personal blog about coding and web technologies - Zeljko Minic">
+	<meta name="keywords" content="blog, coding, development, web, technology, IT, c#, programming, fiddler">
+	<meta name="author" content="Zeljko Minic">
+    <meta name="generator" content="DocPad v6.69.0" />
+	<link href='http://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <style >html.wait {
+	cursor: wait !important;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}</style><link  rel="stylesheet" href="/styles/style.css" />
+</head>
+<body>
+	<div class="siteContainer">
+		<img src="/images/logo.png" />
+
+		<ul class="menu">
+		
+			<li class="inactive">
+				<a href="/index.html">
+					Home
+				</a>
+			</li>
+		
+			<li class="inactive">
+				<a href="/about.html">
+					About
+				</a>
+			</li>
+		
+		</ul>
+		
+		<div class="post">
+
+	<div class="title">
+		<h1>Creating Fiddler extension for custom filtering</h1>
+	</div>
+	
+	<div class="body">
+		<p>&#39;ve been using Fiddler for a long time and every time I start exploring certain feature I&#39;m positively surprised how well designed product it is. What you can&#39;t do through its UI you can program in Fiddler Script, or for more complex features you can create fiddler extension.
+In this article I will walk you through a process of writing Fiddler Extension from scratch. I will create new tab page with custom icon, create UI for extension and hookup to requests and responses to perform some filtering and manipulation.</p>
+<p>I also plan to use this extension as a base for writing future extensions because I think it covers most tasks extension developers need to do: create UI for configuration, persist configuration and use configuration inside separate interface.</p>
+<p>If you haven&#39;t used fiddler before, it&#39;s a debugging/analyzing software which installs as a proxy server enabling you to monitor all traffic between your local application and remote server. If you are a web developer it&#39;s simply a must have tool.</p>
+<h2 id="overview">Overview</h2>
+<p>I have split up extension in three parts: UI, configuration and filtering.</p>
+<p>For UI part idea is to hook up to event when fiddler UI is completely loaded and then to add a new TabPage in which I will instantiate user control for extension UI.</p>
+<p>Configuration part is responsible for configuration persistence, providing default configuration, and keeping instance of currently active configuration.</p>
+<p>Filtering part is code that runs on every request/response and performs some meaningful work based on configuration we have set up in the UI.</p>
+<p>This is what final extension looks like:</p>
+<p><img src="/images/posts/fiddler-extension.png" /></p>
+<p>This extension will provide functionality to create filter presets. For every preset you can set host filter and url filter. This functionality is a bit different then Fiddler&#39;s Host filter because it enables use of wildcards for IP addresses, here you can simply specify 192.* to include all hosts within that address range. URL filter is same as host filter (enables wildcards) but its scope is full URL.</p>
+<p>There is also functionality to send custom CORS headers with every response and in that way enable you to overcome same origin policy while in development. It supports setting following CORS headers: Access-Control-Allow-Origin, Access-Control-Allow-Headers and Access-Control-Allow-Credentials. With this functionality I can easily develop Phonegap applications in Google Chrome and it won&#39;t complain about same origin policy.</p>
+<h2 id="project-configuration">Project configuration</h2>
+<p>There is good documentation how to setup new extension project at Fiddler website so I&#39;m not going to repeat it. Go through it and don&#39;t forget to set up post-build event so it can copy extension to correct location automatically after successful build.</p>
+<h2 id="fiddler-interfaces">Fiddler interfaces</h2>
+<p>In this extension I will implement two fiddler extension interfaces: IFiddlerExtension and IAutoTemper2. First interface allows me to hook up to onLoad event which fires when Fiddler UI finishes loading, and latter allows me to hook up to request and do some work.</p>
+<p>Interface implementation cannot be any simpler, create class that implement extension interface and Fiddler will automatically load it at correct time provided that you have copied extension DLL at correct location (see Project Configuration).</p>
+<h2 id="ui-part">UI part</h2>
+<p>To create new tab in Fiddler UI you need to implement IFiddlerExtension and OnLoad method. Here I&#39;m creating new TabPage, adding new icon (from embedded resources) to correct image list and setting TabPage&#39;s ImageIndex to last icon in list. And to finish UI initialization I&#39;m adding ConfigForm UserControl to tab page.</p>
+<pre><code>public class Extension : IFiddlerExtension
+{
+    public void OnBeforeUnload()
+    {
+        ConfigurationManager.SaveConfig();
+    }
+
+    public void OnLoad()
+    {
+        var oPage = new TabPage(&quot;iBanking&quot;);
+
+        using (var stream = GetType().Assembly.GetManifestResourceStream(&quot;iBankingFiddlerExtension.icon.png&quot;))
+        {
+            if (stream != null)
+            {
+                FiddlerApplication.UI.imglSessionIcons.Images.Add(Image.FromStream(stream));
+                oPage.ImageIndex = Enum.GetNames(typeof (SessionIcons)).Length;
+            }
+        }
+
+        var oView = new ConfigForm { Dock = DockStyle.Fill };
+
+        oPage.Controls.Add(oView);
+
+        FiddlerApplication.UI.tabsViews.TabPages.Add(oPage);
+    }
+}
+</code></pre><p>ConfigForm UserControl is implemented with WindowsForms technology. Basic idea is to bind UI controls to configuration object so any change to UI should reflect to active configuration and vice versa.</p>
+<h2 id="configuration-part">Configuration part</h2>
+<p>To handle configuration part I&#39;ve created new class - ConfigurationManager. It&#39;s responsibility is to persist configuration, to provide default configuration, and to provide singleton access to configuration at every time. I&#39;m using isolated storage (per user) for configuration file and XML serializer. Idea is to automatically load config on Fiddler startup and to save it when Fiddler is closing. I&#39;ve implemented ConfigurationManager as static class with singleton property ActiveConfig which loads configuration from disk on first access. To save config when Fiddler is closing I used OnBeforeUnload event in IFiddlerExtension interface.</p>
+<p>Relevant snippets:</p>
+<pre><code>public static Config LoadConfig()
+{
+    using (
+        var storage = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly,
+            null, null))
+    {
+        if (!storage.FileExists(ConfigFile))
+        {
+            var cfg = GetDefaultConfig();
+
+            SaveConfig(cfg);
+            return cfg;
+        }
+
+        using (var stream = new IsolatedStorageFileStream(ConfigFile, FileMode.Open, storage))
+        {
+            var serializer = new XmlSerializer(typeof(Config));
+
+            return (Config) serializer.Deserialize(stream);
+        }
+    }
+}
+
+protected static void SaveConfig(Config cfg)
+{
+    using (
+        var storage = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly,
+            null, null))
+    {
+        using (var stream = new IsolatedStorageFileStream(ConfigFile, FileMode.Create, storage))
+        {
+            var serializer = new XmlSerializer(typeof(Config));
+
+            serializer.Serialize(stream, cfg);
+        }
+    }
+}
+</code></pre><h2 id="filtering-part">Filtering part</h2>
+<p>In this part I&#39;m implementing IAutoTamper2 interface to hookup to Fiddler&#39;s request and response events. I&#39;m also using Configuration class I created before.</p>
+<p>For filtering functionality idea is to convert wildcard syntax to regular expression, test coresponding headers and hide sessions that don&#39;t match filter. Filters are expected to be separated with comma. Example: <em>google.com, 192</em>, <em>test</em>.</p>
+<p>Relevant snippets:</p>
+<pre><code>public void OnPeekAtResponseHeaders(Session oSession)
+{
+    if (Config.SendCORSHeaders)
+    {
+        oSession.oResponse.headers[&quot;Access-Control-Allow-Origin&quot;] =
+            Config.CORSHost == &quot;[auto]&quot;
+            ? oSession.oRequest.headers[&quot;origin&quot;] : Config.CORSHost;
+
+        oSession.oResponse.headers[&quot;Access-Control-Allow-Headers&quot;] =
+            Config.CORSHeaders;
+
+        if (Config.CORSAllowCredentials)
+            oSession.oResponse.headers[&quot;Access-Control-Allow-Credentials&quot;] = &quot;true&quot;;
+    }
+}
+
+public void AutoTamperRequestBefore(Session oSession)
+{
+    var preset = Config.ActivePreset;
+    if (preset == null) return;
+
+    if (preset.EnableCustomHostFilter &amp;&amp; !string.IsNullOrEmpty(preset.CustomHostFilter))
+    {
+        if (!Regex.IsMatch(oSession.host, WildcardToRegex(preset.CustomHostFilter)))
+        {
+            oSession[&quot;ui-hide&quot;] = &quot;true&quot;;
+        }
+    }
+
+    if (preset.EnableCustomUrlFilter &amp;&amp; !string.IsNullOrEmpty(preset.CustomUrlFilter))
+    {
+        if (!Regex.IsMatch(oSession.fullUrl.ToLower(), WildcardToRegex(preset.CustomUrlFilter)))
+        {
+            oSession[&quot;ui-hide&quot;] = &quot;true&quot;;
+        }
+    }
+}
+
+private string WildcardToRegex(string input)
+{
+        var pattern = Regex.Replace(input, &quot;\\s*,\\s*&quot;, &quot;,&quot;);
+
+        pattern = &quot;^(&quot; + Regex.Escape(pattern).
+               Replace(@&quot;\*&quot;, &quot;.*&quot;).
+               Replace(@&quot;\?&quot;, &quot;.&quot;).
+               Replace(@&quot;,&quot;, &quot;|&quot;) + &quot;)$&quot;;
+
+    return pattern;
+}
+</code></pre><h2 id="debugging-tips">Debugging tips</h2>
+<p>o debug your extension you need to attach debugger to active Fiddler process. In Visual studio go to Debug -&gt; Attach to process, find &quot;Fiddler.exe&quot; process and attach. After this step you can set breakpoints and debug. This technique is good for debugging interaction with extension, but if you have to debug extension initialization (before UI creation) you can add following code where you want breakpoint:</p>
+<p>Debugger.Launch();
+When you start Fiddler you will see dialog which prompts you to attach debugger, select correct extension solution and click Yes button.</p>
+<p><img src="/images/posts/attach-debugger.png" /></p>
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>Creating this extension was really fun. Now I started to look at Fiddler with new eyes, I&#39;m constantly thinking what I can do next to simplify HTTP traffic inspection and visualization for our projects.</p>
+
+	</div>
+	
+	<div class="comments">
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+			var disqus_shortname = 'therealmofcode'; // required: replace example with your forum shortname
+
+			/* * * DON'T EDIT BELOW THIS LINE * * */
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+	</div>
+	
+</div>
+	</div>
+	
+    <script >(function(){
+	/* Did we just livereload? */
+var log = !!(localStorage && console && console.log && true);
+if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
+	localStorage.removeItem('/docpad-livereload/reloaded');
+	console.log('LiveReload completed at', new Date())
+}
+
+/* Listen for the regenerated event and perform a reload of the page when the event occurs */
+var listen = function(){
+	var primus = new Primus('/docpad-livereload');
+	primus.on('data', function(data){
+		if ( data && data.message ) {
+			if ( data.message === 'generateBefore' ) {
+				if ( log ) {
+					console.log('LiveReload started at', new Date());
+				}
+				if ( typeof document.getElementsByTagName !== 'undefined' ) {
+	document.getElementsByTagName('html')[0].className += ' wait';
+}
+			}
+			else if ( data.message === 'generateAfter' ) {
+				if ( log ) {
+					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
+				}
+				document.location.reload();
+			}
+		}
+	});
+};
+	/* Inject socket into our page */
+var inject = function(){
+	var t = document.createElement('script');
+	t.type = 'text/javascript';
+	t.async = 'async';
+	t.src = '/primus/primus.js';
+	t.onload = listen;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(t, s);
+};
+	if ( typeof Primus !== 'undefined' ) {
+		listen();
+	} else {
+		inject();
+	}
+})();</script>
+</body>
+</html>

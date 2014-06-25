@@ -1,8 +1,10 @@
 <html>
 <head>
     <title><%= @getPreparedTitle() %></title>
+	<meta charset="UTF-8">
 	<meta name="description" content="<%= @getPreparedDescription() %>">
 	<meta name="keywords" content="<%= @getPreparedKeywords() %>">
+	<meta name="author" content="Zeljko Minic">
     <%- @getBlock("meta").toHTML() %>
 	<link href='http://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
