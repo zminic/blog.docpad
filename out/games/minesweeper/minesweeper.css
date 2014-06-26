@@ -1,0 +1,47 @@
+.minesweeper
+{
+    width: 294px;
+    margin: auto;
+}
+
+.board
+{
+    margin-top: 10px;
+    border: 1px outset #666;
+	box-shadow: 4px 4px 4px #aaa;
+}
+
+.field
+{
+	width: 40px;
+	height: 40px;
+	border: 1px inset #666;
+	float:left;
+	
+	text-align: center;
+	cursor: pointer;
+	line-height: 40px;
+	
+	background-color: #fff;
+	color: #000;
+	font-weight: bold;
+}
+
+.field.hidden.flag { background: #eee url('images/flag.png') center no-repeat !important; }
+
+.field.hidden.flag > span { display: none; }
+
+.field.mine { background: url('images/mine.png') center no-repeat; }
+
+.field.mine > span { display: none; }
+
+.field.hidden
+{
+    background-image:none !important;
+    background-color: #eee !important;
+	color: #eee !important;
+}
+
+.field.hidden > span { display: none !important; }
+
+.clear { clear: both; }

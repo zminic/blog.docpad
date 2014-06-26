@@ -1,12 +1,11 @@
 ---
-name: "!home"
 title: "Home"
 layout: "default"
 isPage: true
 order: 0
 ---
 
-<% for post in  @getCollection("html").findAll({ relativeOutDirPath: 'posts' }, [{date: -1}]).toJSON(): %>
+<% for post in @getCollection("posts").toJSON(): %>
 	<div class="post inline">
 		<div class="title">
 			<h1>
@@ -24,7 +23,7 @@ order: 0
 			<% if post.summary: %>
 				<p> 
 					<%- post.summary %> 
-					<a href="<%= post.url %>">read more</a>
+					<a href="<%= post.url %>">more</a>
 				</p>
 			<% end %>
 			

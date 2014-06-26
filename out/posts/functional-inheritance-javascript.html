@@ -1,0 +1,205 @@
+<html>
+<head>
+    <title>Functional inheritance in javascript | The realm of code</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Personal blog about coding and web technologies - Zeljko Minic">
+	<meta name="keywords" content="blog, coding, development, web, technology, IT, javascript, programming, patterns &amp; practices">
+	<meta name="author" content="Zeljko Minic">
+    <meta name="generator" content="DocPad v6.69.0" />
+	<link href='http://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <style >html.wait {
+	cursor: wait !important;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}</style><link  rel="stylesheet" href="/styles/style.css" />
+</head>
+<body>
+	<div class="siteContainer">
+		<img src="/images/logo.png" />
+
+		<ul class="menu">
+		
+			<li class="inactive">
+				<a href="/index.html">
+					Home
+				</a>
+			</li>
+		
+			<li class="inactive">
+				<a href="/about.html">
+					About
+				</a>
+			</li>
+		
+		</ul>
+		
+		<div class="post">
+
+	<div class="title">
+		<h1>Functional inheritance in javascript</h1>
+	</div>
+	
+	<div class="body">
+		<p>People often ask me how do I do inheritance in javascript. Can javascript do inheritance? Even if javascript has classes?</p>
+<p>In this post I will try to give answers to those questions and present inheritance pattern I use frequently in javascript.</p>
+<h2 id="are-there-classes-in-javascript-">Are there classes in javascript?</h2>
+<p>The short answer is no. In javascript the functions are a first class citizens and there is no concept of a class.</p>
+<p>But before I explain what we can do about it let&#39;s first ask ourselves one important question: why do we need classes? Oh, that&#39;s easy, classes organize our code and promote code reuse. Knowing that we can improve our question: &quot;Are there tools in javascript to help us organize our code and to promote code reuse?&quot;. Now this is much better question and the answer is yes, we can use design patterns to emulate constructs that are missing in language specification.</p>
+<p>Although in ECMAScript 6 specification there is a &quot;class&quot; keyword, note that this hardly changes anything from the language point. Language is still functional and classes are merely a syntatic sugar.</p>
+<h2 id="inheritance-patterns">Inheritance patterns</h2>
+<p>So if there are no classes can there be an inheritance? Again remember to think in terms of functionality rather then concepts you know from other programming languages. There are design patterns which we can exploit to get functionality of inheritance.</p>
+<p>There are two well known inheritance design patterns in javascript (at least for me): Pseudoclassical and Functional. The terminology comes from Douglas Crockford&#39;s book &quot;Javascript - The Good Parts&quot; which I recommend reading.</p>
+<p>The Pseudoclassical inheritance pattern is not the subject of this article, it&#39;s much more used then the functional pattern and you can find example of it almost everywhere.</p>
+<h2 id="functional-inheritance-pattern">Functional inheritance pattern</h2>
+<p>n the functional inheritance pattern we create our &quot;classes&quot; with functions that return objects. The pattern is similar and probably comes from the module design pattern. The properties you attach to the returning object are class public interface. Functions and properties you define inside function, but not as a part of the returning object, are private members accessible because of closure and invisible because they were not returned.</p>
+<p>See the following example:</p>
+<h3 id="defining-a-class">Defining a class</h3>
+<pre><code>function TestClass(/*arguments*/)
+{
+    // return object
+    var obj = {};
+
+    var privateField;
+
+    function privateFunction() {}
+
+    obj.publicField = &quot;&quot;;
+
+    obj.publicFunction = function() {};
+
+    // construction logic here
+
+    return obj;
+}
+</code></pre><p>We have defined class function which returns object. Properties and functions defined on that object become public interface and the rest is private. One thing is important to note here, private properties are truly private and there is no way to force class to give up its secrets.</p>
+<p>Ok, how do we inherit that class? See the following example:</p>
+<h3 id="inheritance">Inheritance</h3>
+<pre><code>function TestClassSpecific(/*arguments*/)
+{
+    // initial object is instance of our test class
+    var obj = TestClass();
+
+    // save reference to parent class function
+    var super_publicFunction = obj.publicFunction;
+
+    obj.publicFunction = function()
+    {
+        // call parent class function
+        super_publicFunction();
+    };
+
+    // construction logic here
+
+    return obj;
+}
+</code></pre><p>A few things to note here: our return object is instance of parent class, because of that fact it contains all methods defined on parent class. Second if we want to override parent class function we have to save reference to that function first, then we can easily invoke parent function inside our override.</p>
+<p>It&#39;s simple as that. Very neat and easy on eyes. But wait it gets even better, you can also have protected members:</p>
+<h3 id="protected-members">Protected members</h3>
+<pre><code>function TestClass(my)
+{
+    var obj = {};
+
+    my = my || {};
+
+    my.protectedField = &quot;&quot;;
+
+    my.protectedFunction = function(){};
+
+    return obj;
+}
+
+function TestClassSpecific()
+{
+    var my = {},
+        obj = TestClass(my);
+
+    return obj;
+};
+</code></pre><p>This one may be confusing at first but makes perfect sense once you understand it. If you take object as a argument of parent class and attach properties and functions to that objects then those fields become protected, shared secrets between parent and child classes. In the example above TestClassSpecific <strong>can</strong> access protectedField and protectedFunction, but code outside that class can&#39;t.</p>
+<p>Although this inheritance pattern looks too good to be true you need to understand implications of its usage:</p>
+<h3 id="pros">Pros</h3>
+<ul>
+<li>Easy on eyes. This pattern is very straightforward and easy for beginners to learn.</li>
+<li>Offers truly private and protected members.</li>
+<li>Protects against common javascript pitfalls, specifically if you forget to specify &quot;new&quot; keyword during class creation or if you are using &quot;this&quot; keyword inside functions.</li>
+</ul>
+<h3 id="cons">Cons</h3>
+<ul>
+<li>Requires more memory than Pseudoclassical inheritance pattern. With every new instance of a class memory is reserved for all functions and fields inside that class.</li>
+<li>Types cannot be tested using &quot;instanceof&quot; keyword.</li>
+<li>Javascript minimizers might not perform as good as with Pseudoclassical pattern as there is no way for minimizer to safely rename members of parent class.</li>
+</ul>
+<h3 id="conclusions">Conclusions</h3>
+<p>So, here we have some strong points both for and against functional inheritance pattern and one question comes by itself: Should I use it? There is no unique answer to that question, it depends on your situation. Carefully consider both pros and cons and decide if this pattern is good for you.</p>
+<p>I&#39;m successfully using it on large project (about 100000 lines of javascript code) with nothing but success. I choose it mainly because of the small learning curve - the ease with which I can explain inheritance to new developers.</p>
+<p>What do you think? Does it work for you?</p>
+
+	</div>
+	
+	<div class="comments">
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+			var disqus_shortname = 'therealmofcode'; // required: replace example with your forum shortname
+
+			/* * * DON'T EDIT BELOW THIS LINE * * */
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+	</div>
+	
+</div>
+	</div>
+	
+    <script >(function(){
+	/* Did we just livereload? */
+var log = !!(localStorage && console && console.log && true);
+if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
+	localStorage.removeItem('/docpad-livereload/reloaded');
+	console.log('LiveReload completed at', new Date())
+}
+
+/* Listen for the regenerated event and perform a reload of the page when the event occurs */
+var listen = function(){
+	var primus = new Primus('/docpad-livereload');
+	primus.on('data', function(data){
+		if ( data && data.message ) {
+			if ( data.message === 'generateBefore' ) {
+				if ( log ) {
+					console.log('LiveReload started at', new Date());
+				}
+				if ( typeof document.getElementsByTagName !== 'undefined' ) {
+	document.getElementsByTagName('html')[0].className += ' wait';
+}
+			}
+			else if ( data.message === 'generateAfter' ) {
+				if ( log ) {
+					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
+				}
+				document.location.reload();
+			}
+		}
+	});
+};
+	/* Inject socket into our page */
+var inject = function(){
+	var t = document.createElement('script');
+	t.type = 'text/javascript';
+	t.async = 'async';
+	t.src = '/primus/primus.js';
+	t.onload = listen;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(t, s);
+};
+	if ( typeof Primus !== 'undefined' ) {
+		listen();
+	} else {
+		inject();
+	}
+})();</script>
+</body>
+</html>

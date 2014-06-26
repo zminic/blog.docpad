@@ -23,8 +23,8 @@ docpadConfig =
             @site.keywords.concat(@document.keywords or @document.tags or []).join(', ')
 			
 	collections:
-        pages: ->
-            @getCollection("html").findAllLive({isPage:true},[{order:1}])
+		pages: -> @getCollection("html").findAllLive({isPage:true},[{order:1}])
+		posts: -> @getCollection("html").findAll({relativeOutDirPath: 'posts'}, [{date: -1}])
 			
 	plugins:
 		ghpages:
@@ -35,6 +35,9 @@ docpadConfig =
 			  {raw: 'date', format: 'MMMM Do YYYY', formatted: 'humanDate'}
 			  {raw: 'date', format: 'YYYY-MM-DD', formatted: 'computerDate'}
 			]
+		rss:
+			default:
+				collection: 'posts'
 
 # Export the Configuration
 module.exports = docpadConfig

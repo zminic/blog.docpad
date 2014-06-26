@@ -10,7 +10,7 @@ body
 	font-size: 1rem
 	@media screen and (min-width: 960px)
 		background: url('/images/bgpattern.gif')
-		margin-top: 40px
+		margin-top: 20px
 
 .siteContainer
 	background-color: #fff
@@ -60,6 +60,7 @@ for n, i in 1..5
 			font-size: 0.9em;
 	pre
 		background-color: #efefef
+		border: 2px solid #ddd;
 		padding: 5px
 		border-radius: 6px
 	li
