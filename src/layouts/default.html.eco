@@ -27,6 +27,6 @@
 		<%- @content %>
 	</div>
 	
-    <%- @getBlock("scripts").toHTML() %>
+    <%- @getBlock("scripts").add(["/scripts/google-analytics.js"]).toHTML() %>
 </body>
 </html>

@@ -4,7 +4,7 @@ layout: "post"
 date: 2012-11-08
 summary: "In the previous post I wrote about importance of having personal projects as part of stretching your limits strategy. In this post I'm following my own tips and do something totally different from my everyday work - build a game."
 summaryImage: "/images/posts/minesweeper.png"
-tags: [javascript, programming, patterns & practices]
+tags: [javascript, programming, games, minesweeper]
 ---
 
 In the previous post I wrote about importance of having personal projects as part of "stretching your limits" strategy. In this post I'm following my own tips and do something totally different from my everyday work - build a game.
