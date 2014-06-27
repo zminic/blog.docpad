@@ -12,7 +12,14 @@
 </head>
 <body>
 	<div class="siteContainer">
-		<img src="/images/logo.png" />
+
+	    <div class="header">
+		    <img class="logo" src="/images/logo.png" />
+
+		    <a class="twitter" href="https://twitter.com/zeljko_minic" target="_blank">
+		        <img src="/images/twitter_logo_blue.png" />
+		    </a>
+		</div>
 
 		<ul class="menu">
 		<% for page in @getCollection("pages").toJSON(): %>
@@ -23,8 +30,10 @@
 			</li>
 		<% end %>
 		</ul>
-		
-		<%- @content %>
+
+		<div class="content">
+			<%- @content %>
+		</div>
 	</div>
 	
     <%- @getBlock("scripts").add(["/scripts/google-analytics.js"]).toHTML() %>
