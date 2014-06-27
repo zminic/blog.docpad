@@ -1,5 +1,5 @@
 font-face = "Open Sans", Helvetica, Arial, sans-serif
-menu-color = #636363
+menu-color = #333
 heading-color = #333
 common-border-color = #eee
 top-header-size = 18px
@@ -10,21 +10,29 @@ body
 	font-size: 1rem
 	@media screen and (min-width: 960px)
 		background: url('/images/bgpattern.gif')
-		margin-top: 20px
+	@media screen and (max-width: 960px)
+		background: transparent
+
+.header
+	position: relative
+	.logo
+		margin: 10px 0 0 10px
+	.twitter
+		position: absolute
+		right: 5px
+		top: 5px
 
 .siteContainer
 	background-color: #fff
-	padding: 5px 10px
 	@media screen and (min-width: 960px)
 		width: 960px
 		margin: 0 auto
-		padding: 20px 40px
 
 .menu
 	list-style-type: none
-	padding: 15px 0 15px 0
-	border-top: 1px solid common-border-color
-	border-bottom: 1px solid common-border-color
+	padding: 15px 40px 15px 40px
+	margin: 10px 0 0 0
+	background-color: #eee
 	li
 		display: inline
 		padding-right: 20px
@@ -38,6 +46,12 @@ body
 			&:hover
 				color: #000			
 
+.content
+	padding: 5px 10px
+	@media screen and (min-width: 960px)
+		padding 10px 40px 20px 40px
+
+
 // set header styles
 for n, i in 1..5
 	h{n}
@@ -50,8 +64,8 @@ for n, i in 1..5
 			text-decoration: none
 
 .post
-	padding-top: 10px
 	&.inline
+		padding-top: 10px
 		border-bottom: 1px solid common-border-color
 		.body img
 				max-height: 100px
