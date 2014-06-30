@@ -16,9 +16,14 @@
 	    <div class="header">
 		    <img class="logo" src="/images/logo.png" />
 
-		    <a class="twitter" href="https://twitter.com/zeljko_minic" target="_blank">
-		        <img src="/images/twitter_logo_blue.png" />
-		    </a>
+			<div class="social-icons">
+				<a href="https://twitter.com/zeljko_minic" target="_blank">
+					<img src="/images/twitter_logo_blue.png" />
+				</a>
+				<a href="https://www.linkedin.com/profile/view?id=222314562&trk=nav_responsive_tab_profile" target="_blank">
+					<img src="/images/linkedin_logo.png" />
+				</a>
+		    </div>
 		</div>
 
 		<ul class="menu">
