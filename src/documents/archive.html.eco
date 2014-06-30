@@ -1,0 +1,20 @@
+---
+title: "Archive"
+layout: "default"
+isPage: true
+order: 2
+---
+
+<% currYear = null %>
+
+<% for post in @getCollection("posts").toJSON(): %>
+	<% year = @moment(post.date).format('YYYY') %>
+
+	<% if year != currYear: %>
+		<h1><%= year %></h1>
+		<% currYear = year %>
+	<% end %>
+
+	<p><a href="<%= post.url %>"><%= post.title %></a></p>
+
+<% end %>

@@ -21,11 +21,11 @@ docpadConfig =
 		getPreparedKeywords: ->
             # Merge the document keywords with the site keywords
             @site.keywords.concat(@document.keywords or @document.tags or []).join(', ')
-			
+
 	collections:
 		pages: -> @getCollection("html").findAllLive({isPage:true},[{order:1}])
 		posts: -> @getCollection("html").findAll({relativeOutDirPath: 'posts'}, [{date: -1}])
-			
+
 	plugins:
 		ghpages:
 			deployRemote: 'target'

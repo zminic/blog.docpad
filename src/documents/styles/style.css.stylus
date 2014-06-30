@@ -13,6 +13,9 @@ body
 	@media screen and (max-width: 960px)
 		background: transparent
 
+a
+	text-decoration: none
+
 .header
 	position: relative
 	.logo
@@ -57,6 +60,7 @@ for n, i in 1..5
 	h{n}
 		font-family: 'Oswald', sans-serif
 		font-size: top-header-size - i * header-size-decrement
+		padding-top: 10px
 		padding-bottom: 10px
 		color: heading-color
 		a
