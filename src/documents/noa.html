@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        // Set to the same value as the web property used on the site
+        var gaProperty = 'UA-52338453-1';
+
+        // Disable tracking if the opt-out cookie exists.
+        var disableStr = 'ga-disable-' + gaProperty;
+        document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+        window[disableStr] = true;
+
+        window.location.href = 'index.html';
+    </script>
+</head>
+<body>
+
+</body>
+</html>
