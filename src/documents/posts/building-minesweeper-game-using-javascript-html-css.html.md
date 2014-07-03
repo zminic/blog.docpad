@@ -60,6 +60,7 @@ For the class creation I will use "Functional Inheritance" pattern described in 
 
 Next I'm going to create HTML markup necessary for the game:
 
+```markup
 	<div id="game" class="minesweeper">
 	<div>
 		<h2>
@@ -79,13 +80,16 @@ Next I'm going to create HTML markup necessary for the game:
 	</div>
 	<div class="board"></div>
 	</div>
+```
 	
 And finally to initialize the game I'm simply going to call jQuery plugin over this markup:
 
+```javascript
 	$(document).ready(function ()
 	{
 		$('#game').minesweeper();
 	});
+```
 	
 Ok now the fun stuff. We defined the structure and now we are ready to implement the game.
 
@@ -103,32 +107,35 @@ To draw the board we need to do three things:
 
 _drawing fields:_
 
+```javascript
 	function drawBoard()
 	{
 		var i, j, fieldElement;
-	 
+
 		for (i = 0; i < dimension; i++)
 		{
 			boardData[i] = [];
-	 
+
 			for (j = 0; j < dimension; j++)
 			{
 				fieldElement = $('<div class="field hidden" />')
 					.appendTo(element);
-	 
+
 				boardData[i][j] = Field(fieldElement, i, j);
-	 
+
 				fieldElement.data('location', { x: i, y: j });
 			}
-	 
+
 			$('<div class="clear" />').appendTo(element);
 		}
 	}
+```
 	
 In the code above you can notice a few things. First, I'm creating a matrix in class variable "boardData", then I'm appending a div element for the field to the board element. And finally I'm storing custom data in DOM element under name "location". This data will hold position of the field within boardData matrix.
 
 _planting mines:_
 
+```javascript
 	function getRandomNumber(max)
 	{
 		return Math.floor((Math.random() * 1000) + 1) % max;
@@ -150,11 +157,13 @@ _planting mines:_
 			}
 		}
 	}
-	
+```
+
 Planting mines is dead simple: find a random field in the matrix and call its setMine method, repeat operation until all mines are planted. SetMine method (I'll show it later) sets flag that current field is a mine and updates DOM element giving it a specific class for a mine.
 
 _calculating distances:_
 
+```javascript
 	function calculateDistance()
 	{
 		var i, j;
@@ -180,6 +189,7 @@ _calculating distances:_
 				}
 			}
 	}
+```
 	
 Now it's time to fill the board with some numbers. Idea is to process every field which is not a mine, get its surrounding fields which are mines and update field text to number of mines surrounding that field. The trickiest part here is to find surrounding fields which are mines. For that job I made a function named "traverseBoard" which I will describe later in more detail.
 
@@ -187,6 +197,7 @@ Now it's time to fill the board with some numbers. Idea is to process every fiel
 
 Board traversal function is the heart of minesweeper game. The goal of this function is to get all surrounding fields for observed field on the board and to apply filtering function over it. The function simply moves through the matrix in all directions and returns surrounding fields.
 
+```javascript
 	function traverseBoard(fromField, condition)
 	{
 		var result = [];
@@ -243,6 +254,7 @@ Board traversal function is the heart of minesweeper game. The goal of this func
 	 
 		return $.grep(result, condition);
 	}
+```
 	
 ## The reveal logic ##
 
@@ -255,7 +267,7 @@ The logic:
 * If the field is already revealed and clicked by user then we check if all surrounding mines are already flagged, if yes then we reveal all hidden surrounding fields.
 * And finally we handle situation when user clicked on the empty field (no mines in surrounding). In this situation we recursively reveal all empty fields in surrounding area.
 
-
+```javascript
 	obj.reveal = function (field, auto)
 	{
 		// do not reveal flagged and revealed fields in auto mode
@@ -308,6 +320,7 @@ The logic:
 			}
 		}
 	};
+```
 	
 And that's it! I described only the main logic behind this game and left out a few helper functions and the gameplay but that's not very interesting anyway. I can upload the whole package if there is enough interest.
 

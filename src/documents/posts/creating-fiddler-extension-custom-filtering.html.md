@@ -46,6 +46,7 @@ Interface implementation cannot be any simpler, create class that implement exte
 
 To create new tab in Fiddler UI you need to implement IFiddlerExtension and OnLoad method. Here I'm creating new TabPage, adding new icon (from embedded resources) to correct image list and setting TabPage's ImageIndex to last icon in list. And to finish UI initialization I'm adding ConfigForm UserControl to tab page.
 
+```csharp
 	public class Extension : IFiddlerExtension
     {
         public void OnBeforeUnload()
@@ -73,6 +74,7 @@ To create new tab in Fiddler UI you need to implement IFiddlerExtension and OnLo
             FiddlerApplication.UI.tabsViews.TabPages.Add(oPage);
         }
     }
+```
 	
 ConfigForm UserControl is implemented with WindowsForms technology. Basic idea is to bind UI controls to configuration object so any change to UI should reflect to active configuration and vice versa.
 
@@ -82,6 +84,7 @@ To handle configuration part I've created new class - ConfigurationManager. It's
 
 Relevant snippets:
 
+```csharp
 	public static Config LoadConfig()
 	{
 		using (
@@ -119,7 +122,8 @@ Relevant snippets:
 			}
 		}
 	}
-	
+```
+
 ## Filtering part ##
 
 In this part I'm implementing IAutoTamper2 interface to hookup to Fiddler's request and response events. I'm also using Configuration class I created before.
@@ -128,6 +132,7 @@ For filtering functionality idea is to convert wildcard syntax to regular expres
 
 Relevant snippets:
 
+```csharp
 	public void OnPeekAtResponseHeaders(Session oSession)
 	{
 		if (Config.SendCORSHeaders)
@@ -177,6 +182,7 @@ Relevant snippets:
 	 
 		return pattern;
 	}
+```
 	
 ## Debugging tips ##
 

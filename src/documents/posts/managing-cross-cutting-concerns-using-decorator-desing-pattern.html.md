@@ -19,6 +19,7 @@ AOP is not subject of this post and I will not go into details on how to use it 
 
 Let’s start with an example:
 
+```csharp
 	public interface ILayoutService
 	{
 		void LoadWidget(string name);
@@ -49,6 +50,7 @@ Let’s start with an example:
 	}
 
 	var service = new LayoutService();
+```
 
 In the example above I’ve created the simple imaginary layout management service. It defines only one method that performs widget loading. However the presented design has few flaws:
 
@@ -58,6 +60,7 @@ In the example above I’ve created the simple imaginary layout management servi
 
 Let’s see now an improved example that uses the decorator design pattern:
 
+```csharp
 	public interface ILayoutService
 	{
 		void LoadWidget(string name);
@@ -129,6 +132,7 @@ Let’s see now an improved example that uses the decorator design pattern:
 
 	var service = new LayoutServiceAuthDecorator(
 		new LayoutServiceLoggingDecorator(new LayoutService()));
+```
 
 The code above looks bigger than the one we started with but from the design perspective it’s much better. Look at the LayoutService class. Now it only contains business logic, it is much readable. Also note that there are no dependencies on authorization and logging services, those dependencies are not responsibility of LayoutService class but its creator. User of the class can decide at runtime if it will attach additional behaviors to the service and in what order.
 

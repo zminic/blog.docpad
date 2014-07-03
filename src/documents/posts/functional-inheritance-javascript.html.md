@@ -35,6 +35,7 @@ See the following example:
 
 ### Defining a class ###
 
+```javascript
 	function TestClass(/*arguments*/)
 	{
 		// return object
@@ -52,6 +53,7 @@ See the following example:
 		 
 		return obj;
 	}
+```
 	
 We have defined class function which returns object. Properties and functions defined on that object become public interface and the rest is private. One thing is important to note here, private properties are truly private and there is no way to force class to give up its secrets.
 
@@ -59,6 +61,7 @@ Ok, how do we inherit that class? See the following example:
 
 ### Inheritance ###
 
+```javascript
 	function TestClassSpecific(/*arguments*/)
 	{
 		// initial object is instance of our test class
@@ -77,6 +80,7 @@ Ok, how do we inherit that class? See the following example:
 		 
 		return obj;
 	}
+```
 	
 A few things to note here: our return object is instance of parent class, because of that fact it contains all methods defined on parent class. Second if we want to override parent class function we have to save reference to that function first, then we can easily invoke parent function inside our override.
 
@@ -84,6 +88,7 @@ It's simple as that. Very neat and easy on eyes. But wait it gets even better, y
 
 ### Protected members ###
 
+```javascript
 	function TestClass(my)
 	{
 		var obj = {};
@@ -104,6 +109,7 @@ It's simple as that. Very neat and easy on eyes. But wait it gets even better, y
 			 
 		return obj;
 	};
+```
 	
 This one may be confusing at first but makes perfect sense once you understand it. If you take object as a argument of parent class and attach properties and functions to that objects then those fields become protected, shared secrets between parent and child classes. In the example above TestClassSpecific **can** access protectedField and protectedFunction, but code outside that class can't.
 

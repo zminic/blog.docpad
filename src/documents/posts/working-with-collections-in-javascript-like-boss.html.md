@@ -19,6 +19,7 @@ In this article I will show you how to get started with linq.js library and show
 
 Sample:
 
+```javascript
 	"dataset": [
 	{
 		"seriesname": "2005",
@@ -36,19 +37,23 @@ Sample:
 			{ "value": "39800" }
 		]
 	}]
+```
 	
 This JSON sample represents collection of series of one chart library and I'm going to use it to create all examples.
 
 _Create an array with all values in all series_
 
+```javascript
 	var result = Enumerable
 		.From(dataset)
 		.SelectMany("$.data")
 		.Select("$.value")
 		.ToArray();
+```
 		
 Phew, that was easy. To do that in plain javascript you would need a nested for loop:
 
+```javascript
 	var i,j, result = [];
 	 
 	for(i=0; i < dataset.length; i++)
@@ -58,11 +63,13 @@ Phew, that was easy. To do that in plain javascript you would need a nested for 
 			result.push(dataset[i].data[j].value);
 		}
 	}
+```
 	
 Which one do you like better?
 
 Now you may think that's not a big deal, both code samples are readable and fairly short, but what if we expand our requirements, for example let's say I want only distinct values sorted descending. You can see now how boring that work would be. In linq.js you would simply do:
 
+```javascript
 	var result = Enumerable
 		.From(dataset)
 		.SelectMany("$.data")
@@ -70,32 +77,40 @@ Now you may think that's not a big deal, both code samples are readable and fair
 		.Distinct()
 		.OrderByDescending()
 		.ToArray();
+```
 		
 _Get maximum value in all series_
 
+```javascript
 	var result = Enumerable
 		.From(dataset)
 		.SelectMany("$.data")
 		.Max(function(item){ return parseInt(item.value); });
+``
 		
 _Get series color with the name "2006"_
 
+```javascript
 	var result = Enumerable
 		.From(dataset)
 		.Where("$.seriesname='2006'")
 		.Select("$.color")
 		.ToArray();
+```
 		
 Or you could alternatively use inline functions:
 
+```javascript
 	var result = Enumerable
 		.From(dataset)
 		.Where(function(item){ return item.seriesname == "2006"; })
 		.Select("$.color")
 		.ToArray();
+```
 		
 _Get series which contains value 39800_
 
+```javascript
 	var result = Enumerable
 		.From(dataset)
 		.Where(function(item){ 
@@ -104,14 +119,17 @@ _Get series which contains value 39800_
 					.Any("$.value == '39800'"); 
 		})
 		.ToArray();
+```
 		
 _Get average value, from all series except first_
 
+```javascript
 	Enumerable
 		.From(dataset)
 		.Skip(1)
 		.SelectMany("$.data")
 		.Average(function(item) { return parseInt(item.value); });
+```
 		
 That's it. It wasn't my intention to display all features of library, nor I could (there are a lot of useful functions), but to show you another tool you can put in your belt and use it when needed.
 

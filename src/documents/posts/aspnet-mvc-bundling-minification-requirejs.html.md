@@ -21,10 +21,12 @@ Approach that worked for my use case is to use ASP.NET optimization features to 
 
 define your bundles in App_Start/BundleConfig.cs:
 
-	bundles.Add(new ScriptBundle("~/bundles/test").Include(
-                       "~/Scripts/jquery-{version}.js", 
-                       "~/Scripts/q.js", 
-                       "~/Scripts/globalize.js"));
+```csharp
+bundles.Add(new ScriptBundle("~/bundles/test").Include(
+				   "~/Scripts/jquery-{version}.js",
+				   "~/Scripts/q.js",
+				   "~/Scripts/globalize.js"));
+```
 
 This is test bundle that bundles three libraries.
 
@@ -32,6 +34,7 @@ This is test bundle that bundles three libraries.
 
 To configure RequireJS I will inject some script in _Layout view right after loading RequireJS library:
 
+```aspnet
 	<script src="~/Scripts/require.js"></script>
  
     @if (!HttpContext.Current.IsDebuggingEnabled)
@@ -47,6 +50,7 @@ To configure RequireJS I will inject some script in _Layout view right after loa
             });
         </script>
     }
+```
 
 A few things to note here:
 

@@ -23,6 +23,7 @@ In this post I will show you how I cheated on keyboard events and managed to imp
 
 Let me first show you jQuery plugin that I used for input filtering with keypress event:
 
+```javascript
 	$.fn.blockInput = function (options)
 	{
 		this.filter('input,textarea')
@@ -38,6 +39,7 @@ Let me first show you jQuery plugin that I used for input filtering with keypres
 	};
 	 
 	$('#test').blockInput({ regex: '[0-9|A-Z]'});
+```
 	
 You can see it in action in this [fiddle](http://jsfiddle.net/zminic/dJnGY/).
 
@@ -45,6 +47,7 @@ You can see it in action in this [fiddle](http://jsfiddle.net/zminic/dJnGY/).
 
 This is updated plugin that works without keypress event:
 
+```javascript
 	$.fn.blockInput = function (options) 
 	{
 		// find inserted or removed characters
@@ -108,6 +111,7 @@ This is updated plugin that works without keypress event:
 	};
 	 
 	$('#test').blockInput({ regex: '[0-9A-Z]' });
+```
 	
 And corresponding [fiddle](http://jsfiddle.net/zminic/8Lmay/).
 
@@ -117,6 +121,7 @@ To be able to inspect changed value I first had to be able to distinguish curren
 
 Example:
 
+```javascript
 	this.filter('input,textarea').on('input', function ()
 	{
 		// Filtering code
@@ -126,9 +131,11 @@ Example:
 	{
 		$(this).data('lastVal', this.value);
 	});
+```
 	
 Next task was to find out what characters were inserted/removed/pasted. At first it seemed like trivial task to do, simply get last character of input field and filter that value. But then it became obvious that user can insert text anywhere, not necessarily at the end, and then "findDelta" function was born.
 
+```javascript
 	function findDelta(value, prevValue) 
 	{
 		var delta = '';
@@ -143,6 +150,7 @@ Next task was to find out what characters were inserted/removed/pasted. At first
 	 
 		return delta;
 	}
+```
 	
 Idea here is to find inserted characters by using information we already have: value, previous value and inserted text length which you get if you subtract lengths of value and previous value.
 When we know inserted text length we can start searching for it by sequentially removing pairs of characters until value becomes same as previous value, then removed characters become delta.
@@ -151,12 +159,14 @@ It turns out that finding removed characters is directly opposite: start from pr
 
 To find out if user pasted content we test if number of inserted characters is bigger then one or if there are no inserted or removed characters (in other words user pasted over existing text not changing resulting text length).
 
+```javascript
 	// get inserted chars
 	var inserted = findDelta(val, lastVal);
 	// get removed chars
 	var removed = findDelta(lastVal, val);
 	// determine if user pasted content
 	var pasted = inserted.length > 1 || (!inserted && !removed);
+```
 	
 Finally if user pasted content we need to check whole input value character by character (because regex is for single characters), if user removed something we don't need to test, and if user inserted single character we need to test only that character.
 
