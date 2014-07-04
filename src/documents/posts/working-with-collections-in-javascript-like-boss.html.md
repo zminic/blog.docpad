@@ -86,7 +86,7 @@ _Get maximum value in all series_
 		.From(dataset)
 		.SelectMany("$.data")
 		.Max(function(item){ return parseInt(item.value); });
-``
+```
 		
 _Get series color with the name "2006"_
 
