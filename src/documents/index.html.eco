@@ -3,9 +3,12 @@ title: "Home"
 layout: "default"
 isPage: true
 order: 0
+isPaged: true
+pagedCollection: 'posts'
+pageSize: 10
 ---
 
-<% for post in @getCollection("posts").toJSON(): %>
+<% for post in @getPageCollection("posts").toJSON(): %>
 	<div class="post inline">
 		<div class="title">
 			<h1>
@@ -36,3 +39,18 @@ order: 0
 		</div>
 	</div>
 <% end %>
+
+<!-- Page Listing -->
+<div class="pagination">
+    <ul>
+        <!-- Previous Page Button -->
+        <% if @hasPrevPage(): %>
+            <li><a href="<%= @getPrevPage() %>">&laquo; Previous</a></li>
+        <% end %>
+
+        <!-- Next Page Button -->
+        <% if @hasNextPage(): %>
+            <li><a href="<%= @getNextPage() %>">Next &raquo;</a></li>
+        <% end %>
+    </ul>
+</div>

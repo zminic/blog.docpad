@@ -13,7 +13,8 @@
     "docpad-plugin-livereload": "~2.6.0",
     "docpad-plugin-ghpages": "~2.4.3",
     "docpad-plugin-stylus": "~2.7.0",
-    "docpad-plugin-moment": "~2.0.2"
+    "docpad-plugin-moment": "~2.0.2",
+    "docpad-plugin-paged": "~2.2.5"
   },
   "main": "node_modules/docpad/bin/docpad-server",
   "scripts": {
