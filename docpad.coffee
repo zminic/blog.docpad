@@ -23,8 +23,17 @@ docpadConfig =
             @site.keywords.concat(@document.keywords or @document.tags or []).join(', ')
 
 	collections:
-		pages: -> @getCollection("html").findAllLive({isPage:true, isPagedAuto: $ne: true},[{order:1}])
-		posts: -> @getCollection("html").findAllLive({relativeOutDirPath: 'posts', isPagedAuto: $ne: true}, [{date: -1}])
+		pages: -> @getCollection("html").findAllLive({
+      isPage:true
+      isPagedAuto:
+        $ne: true
+    },[{order:1}])
+		posts: -> @getCollection("html").findAllLive({
+      relativeOutDirPath:
+        $like: 'posts'
+      isPagedAuto:
+        $ne: true
+    }, [{date: -1}])
 
 	plugins:
 		ghpages:
