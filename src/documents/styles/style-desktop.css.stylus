@@ -1,0 +1,14 @@
+@media screen and (min-width: 961px)
+	body
+		background: url('/images/bgpattern.gif')
+	.siteContainer
+		width: 960px
+		margin: 0 auto
+	.content
+		padding 10px 40px 20px 40px
+	.menu
+		li
+			a
+				font-weight: normal;
+				&:hover
+				color: #000
