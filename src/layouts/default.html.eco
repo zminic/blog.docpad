@@ -7,52 +7,68 @@
 	<meta name="author" content="Zeljko Minic">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <%- @getBlock("meta").toHTML() %>
-	<link href='http://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <%- @getBlock("styles").add(["/styles/prism.css", "/styles/style.css", "/styles/style-desktop.css"]).toHTML() %>
+    <%- @getBlock("styles").add(["/styles/bootstrap.min.css", "/styles/bootstrap-theme.min.css", "/styles/prism.css", "/styles/style.css", "/styles/style-desktop.css"]).toHTML() %>
 </head>
 <body>
-	<div class="siteContainer">
 
-	    <div class="header">
-			
-			<ul class="menu">
-			<% for page in @getCollection("pages").toJSON(): %>
-				<li class="<%= if page.id is @document.id then 'active' else 'inactive' %>">
-					<a href="<%= page.url %>">
-						<%= page.title %>
+	<div class="col-md-2 col-xs-0"></div>
+	<div class="col-md-8 col-xs-12">
+
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/index.html">
+				<span>&lt;</span>
+				<span>
+					the<strong>realm</strong>of<strong>code</strong>
+				</span>
+				<span>/&gt;</span>
+			</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">	
+				<% for page in @getCollection("pages").toJSON(): %>
+					<li class="<%= if page.id is @document.id then 'active' else '' %>">
+						<a href="<%= page.url %>">
+							<%= page.title %>
+						</a>
+					</li>
+				<% end %>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="https://twitter.com/zeljko_minic" target="_blank" title="Twitter">
+						<img src="/images/twitter.png" />
 					</a>
 				</li>
-			<% end %>
+				<li>
+					<a href="http://rs.linkedin.com/in/zminic" target="_blank" title="LinkedIn">
+						<img src="/images/linkedin.png" />
+					</a>
+				</li>
 			</ul>
-			
-			<div class="logo-container">
-				<div class="logo">
-					<span>&lt;</span>
-					<span>
-						the<span class="accent">realm</span>of<span class="accent">code</span>
-					</span>
-					<span>/&gt;</span>
-				</div>
-			</div>
-		
-		    
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+		</nav>
 
-			<div class="social-icons">
-				<a href="https://twitter.com/zeljko_minic" target="_blank" title="Twitter">
-					<img src="/images/twitter.png" />
-				</a>&nbsp;
-				<a href="http://rs.linkedin.com/in/zminic" target="_blank" title="LinkedIn">
-					<img src="/images/linkedin.png" />
-				</a>
-		    </div>
-		</div>
 
 		<div class="content">
 			<%- @content %>
 		</div>
 	</div>
+	<div class="col-md-2 col-xs-0"></div>
 	
-    <%- @getBlock("scripts").add(["/scripts/prism.js", "/scripts/google-analytics.js"]).toHTML() %>
+    <%- @getBlock("scripts").add(["/scripts/jquery.min.js", "/scripts/bootstrap.min.js", "/scripts/prism.js", "/scripts/google-analytics.js"]).toHTML() %>
 </body>
 </html>

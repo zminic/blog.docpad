@@ -40,17 +40,17 @@ pageSize: 10
 	</div>
 <% end %>
 
-<!-- Page Listing -->
-<div class="pagination">
-    <ul>
+<!-- Pagination -->
+<nav>
+    <ul class="pager">
         <!-- Previous Page Button -->
         <% if @hasPrevPage(): %>
-            <li><a href="<%= @getPrevPage() %>">&laquo; Previous</a></li>
+            <li><a href="<%= @getPrevPage() %>">&larr; Previous</a></li>
         <% end %>
 
         <!-- Next Page Button -->
         <% if @hasNextPage(): %>
-            <li><a href="<%= @getNextPage() %>">Next &raquo;</a></li>
+            <li><a href="<%= @getNextPage() %>">Next &rarr;</a></li>
         <% end %>
     </ul>
-</div>
+</nav>
