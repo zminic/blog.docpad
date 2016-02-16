@@ -1,22 +1,40 @@
 font-face = "Open Sans", Helvetica, Arial, sans-serif
-menu-color = #333
-heading-color = #333
+menu-color = #000
+heading-color = #000
 common-border-color = #eee
-top-header-size = 18px
+top-header-size = 20px
 header-size-decrement = 2px
+link-color = #7da7d9
 
 body
 	font-family: 'Arimo', sans-serif;
 	font-size: 1rem
 	background: transparent
+	line-height: 1.5em
 
 a
 	text-decoration: none
+	color: link-color
+
+img
+	&.centered
+		display: block
+		margin-left: auto
+		margin-right: auto
 
 .header
 	position: relative
-	.logo
-		margin: 10px 0 0 10px
+	.logo-container
+		background-color:#fff;
+		background-image: linear-gradient(rgba(170,170,170,.3) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(170,170,170,.3) 1px, transparent 1px);
+		background-size: 10px 10px, 10px 10px;
+		height: 81px
+		.logo
+			padding: 25px
+			font-size: 30px
+			.accent
+				font-weight: bold
 	.social-icons
 		display: none;
 
@@ -25,22 +43,19 @@ a
 
 .menu
 	list-style-type: none
-	padding: 15px 40px 15px 40px
-	margin: 10px 0 0 0
-	background-color: #eee
+	padding: 0
+	margin-bottom: 5px;
 	li
 		display: inline
 		padding-right: 20px
 		&.active
 			font-weight: bold
+			a
+				color: #666;
 		a
 			text-decoration: none
-			text-transform: uppercase
 			color: menu-color
-			font-weight: bold;
-
-.content
-	padding: 5px 10px
+			font-weight: bold
 
 // set header styles
 for n, i in 1..5
@@ -62,7 +77,7 @@ for n, i in 1..5
 				max-height: 100px
 				max-width: 50%
 		.info
-			color: #ccc;
+			color: #999;
 			font-size: 0.9em;
 
 	li

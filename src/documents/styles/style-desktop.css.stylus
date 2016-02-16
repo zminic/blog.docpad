@@ -1,13 +1,11 @@
 @media screen and (min-width: 961px)
 	body
-		background: url('/images/bgpattern.gif')
 	.header
 		.social-icons
 			display: block;
 			position: absolute
 			top: 0
 			right: 5px
-			background-color: #eee
 			width: 60px
 			height: 26px
 			border-radius: 6px
@@ -16,11 +14,8 @@
 	.siteContainer
 		width: 960px
 		margin: 0 auto
-	.content
-		padding 10px 40px 20px 40px
 	.menu
 		li
 			a
-				font-weight: normal;
 				&:hover
-					color: #000
+					color: #666

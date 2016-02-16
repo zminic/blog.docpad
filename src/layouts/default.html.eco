@@ -15,27 +15,38 @@
 	<div class="siteContainer">
 
 	    <div class="header">
-		    <img class="logo" src="/images/logo.png" />
+			
+			<ul class="menu">
+			<% for page in @getCollection("pages").toJSON(): %>
+				<li class="<%= if page.id is @document.id then 'active' else 'inactive' %>">
+					<a href="<%= page.url %>">
+						<%= page.title %>
+					</a>
+				</li>
+			<% end %>
+			</ul>
+			
+			<div class="logo-container">
+				<div class="logo">
+					<span>&lt;</span>
+					<span>
+						the<span class="accent">realm</span>of<span class="accent">code</span>
+					</span>
+					<span>/&gt;</span>
+				</div>
+			</div>
+		
+		    
 
 			<div class="social-icons">
-				<a href="https://twitter.com/zeljko_minic" target="_blank">
-					<img src="/images/twitter_logo_blue.png" />
-				</a>
-				<a href="http://rs.linkedin.com/in/zminic" target="_blank">
-					<img src="/images/linkedin_logo.png" />
+				<a href="https://twitter.com/zeljko_minic" target="_blank" title="Twitter">
+					<img src="/images/twitter.png" />
+				</a>&nbsp;
+				<a href="http://rs.linkedin.com/in/zminic" target="_blank" title="LinkedIn">
+					<img src="/images/linkedin.png" />
 				</a>
 		    </div>
 		</div>
-
-		<ul class="menu">
-		<% for page in @getCollection("pages").toJSON(): %>
-			<li class="<%= if page.id is @document.id then 'active' else 'inactive' %>">
-				<a href="<%= page.url %>">
-					<%= page.title %>
-				</a>
-			</li>
-		<% end %>
-		</ul>
 
 		<div class="content">
 			<%- @content %>
