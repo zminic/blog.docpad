@@ -11,11 +11,11 @@ pageSize: 10
 <% for post in @getPageCollection("posts").toJSON(): %>
 	<div class="post inline">
 		<div class="title">
-			<h1>
+			<h3>
 				<a href="<%= post.url %>">
 					<%= post.title %>
 				</a>
-			</h1>
+			</h3>
 		</div>
 
 		<div class="body">

@@ -7,7 +7,7 @@ summaryImage: "/images/posts/86416691_4c7286fa9b_m.jpg"
 tags: [javascript, programming, quirks]
 ---
 
-<img src="/images/posts/86416691_4c7286fa9b_m.jpg" align="left" />
+<img class="img-responsive" src="/images/posts/86416691_4c7286fa9b_m.jpg" align="left" />
 
 This one was a surprise. Chrome for Android doesn't support keypress event.
 

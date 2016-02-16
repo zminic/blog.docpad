@@ -87,7 +87,7 @@ Yes we can! With the help of aspect oriented programming and concept called inte
 
 I think that most of IoC containers have concept of interception - the ability to define certain interceptors (aspects) that can change behavior of your class once configured to do so. You can think about them as generic decorators created to fit any class and they are usually created to address cross cutting concerns. In my example I'm using Unity container and Unity.Interception extension.
 
-<img src="/images/posts/wcf-proxy-ioc.png" />
+<img class="img-responsive" src="/images/posts/wcf-proxy-ioc.png" />
 
 The idea is to create interceptor which will intercept every proxy method call and correctly create new proxy object, invoke method and perform cleanup (close proxy).
 

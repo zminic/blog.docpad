@@ -1,9 +1,7 @@
-font-face = "Open Sans", Helvetica, Arial, sans-serif
+header-font = 'Oswald', sans-serif
+header-color = #000
 menu-color = #000
-heading-color = #000
 common-border-color = #eee
-top-header-size = 20px
-header-size-decrement = 2px
 link-color = #7da7d9
 
 a
@@ -21,24 +19,23 @@ img
 	
 .navbar-default
 	.navbar-brand
-		color: #000
+		color: menu-color
 	.navbar-nav
 		>li
 			&.active
 				>a
-					color: #000
+					color: menu-color
 			>a
-				color: #000
+				color: menu-color
 
 // set header styles
 for n, i in 1..5
 	h{n}
-		font-family: 'Oswald', sans-serif
-		font-size: top-header-size - i * header-size-decrement
+		font-family: header-font
 		padding-bottom: 10px
-		color: heading-color
+		color: header-color
 		a
-			color: heading-color
+			color: header-color
 			text-decoration: none
 
 .post

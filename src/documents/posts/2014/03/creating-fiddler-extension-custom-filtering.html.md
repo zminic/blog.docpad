@@ -26,7 +26,7 @@ Filtering part is code that runs on every request/response and performs some mea
 
 This is what final extension looks like:
 
-<img src="/images/posts/fiddler-extension.png" />
+<img class="img-responsive" src="/images/posts/fiddler-extension.png" />
 
 This extension will provide functionality to create filter presets. For every preset you can set host filter and url filter. This functionality is a bit different then Fiddler's Host filter because it enables use of wildcards for IP addresses, here you can simply specify 192.* to include all hosts within that address range. URL filter is same as host filter (enables wildcards) but its scope is full URL.
 
@@ -191,7 +191,7 @@ o debug your extension you need to attach debugger to active Fiddler process. In
 Debugger.Launch();
 When you start Fiddler you will see dialog which prompts you to attach debugger, select correct extension solution and click Yes button.
 
-<img src="/images/posts/attach-debugger.png" />
+<img class="img-responsive" src="/images/posts/attach-debugger.png" />
 
 ## Final thoughts ##
 

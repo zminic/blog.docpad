@@ -24,7 +24,7 @@ We agreed that solution should meet these requirements:
 
 After considering options I proposed architecture with custom application tunnel between DMZ and intranet zones. This architecture includes two intermediary routers, in further text R1 and R2, that form application tunnel. The R1 and R2 pair is called application tunnel. Message sent to the R1 router will be forwarded to R2 router using reverse connection. After that R2 router must route message to the destination service.
 
-<img class="centered" src="/images/posts/wcf-reverse-invoke.png" title="Proposed architecture" />
+<img class="centered img-responsive" src="/images/posts/wcf-reverse-invoke.png" title="Proposed architecture" />
 
 Following steps describe general flow of communication:
 

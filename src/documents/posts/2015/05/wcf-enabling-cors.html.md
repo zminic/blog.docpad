@@ -7,7 +7,7 @@ summaryImage: "/images/posts/cors.png"
 tags: [WCF, CORS, cross origin, extension, WCF behavior]
 ---
 
-<img src="/images/posts/cors.png" title="CORS" align="left" />
+<img class="img-responsive" src="/images/posts/cors.png" title="CORS" align="left" />
 
 Because of the [same origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) javascript from one domain can access resource on another domain only through GET request. Usually when we communicate with services we need to use verbs other than GET and sometimes we need to set custom HTTP headers. [Cross origin resource sharing](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing) is a mechanism to mitigate this limitation by setting correct headers to allow interaction.
 

@@ -7,7 +7,7 @@ summaryImage: "/images/posts/html5-history.png"
 tags: [ASP.NET, MVC, HTML5, History API]
 ---
 
-<img src="/images/posts/html5-history.png" title="Html5 history" align="left" />
+<img class="img-responsive" src="/images/posts/html5-history.png" title="Html5 history" align="left" />
 
 One way to implement client side navigation in single page apps would be to use HTML5 history API. With this API it is possible to change browser URL without full page reload and also to respond to browser navigation buttons (back and forward).
 
