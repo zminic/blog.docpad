@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <%- @getBlock("meta").toHTML() %>
 	<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <%- @getBlock("styles").add(["/styles/bootstrap.min.css", "/styles/bootstrap-theme.min.css", "/styles/prism.css", "/styles/style.css", "/styles/style-desktop.css"]).toHTML() %>
+    <%- @getBlock("styles").add(["/styles/bootstrap.min.css", "/styles/bootstrap-theme.min.css", "/styles/prism.css", "/styles/style.css"]).toHTML() %>
 </head>
 <body>
 

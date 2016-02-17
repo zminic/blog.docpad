@@ -1,5 +1,6 @@
 # Define the Configuration
 docpadConfig = 
+    
 	templateData:
 		site:
 			title: "The realm of code"
@@ -47,6 +48,17 @@ docpadConfig =
 		rss:
 			default:
 				collection: 'posts'
+		stylus:
+			environments:
+				development:
+					stylusOptions:
+						compress: false
+					
+				
+	environments:
+		production:
+			# exclude sourcemap files in production
+			ignoreCustomPatterns: /.*\.map$/
 
 # Export the Configuration
 module.exports = docpadConfig
