@@ -56,7 +56,7 @@ docpadConfig =
 					
 				
 	environments:
-		production:
+		static:
 			# exclude sourcemap files in production
 			ignoreCustomPatterns: /.*\.map$/
 
