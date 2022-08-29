@@ -13,7 +13,7 @@ Now I have decided it's time for me to learn different stack altogether and to b
 
 After going through react docs I have found example showing simple tic-tac-toe game and explaining why react is a good fit for this kind of applications. Seeing game, board and squares I immediately remembered game I created in javascript - Minesweeper. So in this post I will explain how I created a Minesweeper game in react.
 
-You can find demo [here](https://therealmofcode.com/minesweeper-react/), and source code [here](https://github.com/zminic/minesweeper-react).
+You can find demo [here](/games/minesweeper-react/), and source code [here](https://github.com/zminic/minesweeper-react).
 
 <img src="/images/posts/minesweeper-react.png" alt="Minesweeper react" />
 

@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/games/minesweeper-react/static/css/main.888aa8f8.css",
+    "main.js": "/games/minesweeper-react/static/js/main.42b01b72.js",
+    "static/media/digital-7.ttf": "/games/minesweeper-react/static/media/digital-7.93911ab167c943140756.ttf",
+    "index.html": "/games/minesweeper-react/index.html",
+    "main.888aa8f8.css.map": "/games/minesweeper-react/static/css/main.888aa8f8.css.map",
+    "main.42b01b72.js.map": "/games/minesweeper-react/static/js/main.42b01b72.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.888aa8f8.css",
+    "static/js/main.42b01b72.js"
+  ]
+}

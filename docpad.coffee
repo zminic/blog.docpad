@@ -3,7 +3,7 @@ docpadConfig =
     
 	templateData:
 		site:
-			url: "http://therealmofcode.com"
+			url: "https://zminic.github.io"
 			title: "The realm of code"
 			keywords: "blog, coding, development, web, technology, IT"
 			description: "Personal blog about coding and web technologies - Zeljko Minic"
