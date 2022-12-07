@@ -10,7 +10,7 @@
     "docpad": "~6.83.2",
     "docpad-plugin-eco": "~2.1.0",
     "docpad-plugin-ghpages": "~2.4.4",
-    "docpad-plugin-livereload": "~2.7.1",
+    "docpad-plugin-livereload": "~2.11.0",
     "docpad-plugin-marked": "~2.3.0",
     "docpad-plugin-moment": "~2.0.2",
     "docpad-plugin-paged": "~2.4.0",
